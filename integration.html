@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integration Guide - US Media</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Define a fonte e classes de estilo */
+        :root { font-family: 'Inter', sans-serif; }
+
+        /* Estilo para Blocos de Código (pre > code) */
+        .code-block {
+            background-color: #f7f7f7; 
+            border-left: 4px solid #ff4f00ff; 
+            padding: 1rem;
+            border-radius: 0.25rem;
+            overflow-x: auto; 
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.875rem; 
+            color: #374151; 
+            white-space: pre-wrap; 
+            word-wrap: break-word;
+        }
+        .code-block code {
+            display: block; 
+            padding: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4 min-h-screen">
+
+    <div class="container mx-auto max-w-7xl bg-white shadow-xl rounded-xl overflow-hidden">
+        
+        <div class="bg-[#ff4f00ff] p-6 md:p-8 text-center rounded-t-xl">
+            <a href="https://usmediaconsulting.com/en/" target="_blank">
+                <img src="https://usmediaconsulting.com/wp-content/uploads/2025/10/logo-20-years.png" alt="US Media Logo" class="max-w-[150px] h-auto mx-auto">
+            </a>
+        </div>
+        
+        <div class="p-6 md:p-10 lg:p-12">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Integration Guide: <span id="client-name">Loading...</span></h1>
+            <p class="text-gray-600 mb-6">Firstly, select only one of the measurement methods presented in this document. The most essential parameter that needs to be stored and sent back after a conversion is the **"click_id"** that accompanies our traffic, and it must be preserved until the conversion tag is triggered.</p>
+            
+            <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4 border-b pb-2">Configuration Methods</h2>
+
+            <div class="mb-6 p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded-md">
+                <label for="campaign-model-select" class="block text-lg font-bold text-gray-700 mb-2">1. Select Campaign Model:</label>
+                <select id="campaign-model-select" class="block w-full md:w-1/3 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#ff4f00ff] focus:border-[#ff4f00ff] sm:text-sm">
+                    <option value="CPA">CPA (Cost per Acquisition)</option>
+                    <option value="CPL">CPL (Cost per Lead)</option>
+                    <option value="CPS" selected>CPS (Cost per Sale)</option>
+                </select>
+                <p class="text-sm text-gray-500 mt-1">Changing the model will update the **conversion macros** in the code blocks below.</p>
+            </div>
+
+            <div id="integration-methods">
+                
+                <h3 class="text-xl font-bold text-gray-700 mt-6 mb-3">A. Server Postback (S2S)</h3>
+                <p class="text-gray-600 mb-3">Most recommended integration method, which is cookieless and offers the best conversion validation accuracy. Configure the backend to send conversion data to the following URL.</p>
+                <div class="bg-gray-50 p-4 rounded-md shadow-inner mb-4">
+                    <pre class="code-block" id="s2s-url-block"><code data-template-key="s2s">Loading...</code></pre>
+                    <p class="text-sm text-gray-500 mt-2">**IMPORTANT:** Replace **`{...}`** with your unique conversion measurement ID and value macros, as shown in the updated code block.</p>
+                </div>
+
+                <h3 class="text-xl font-bold text-gray-700 mt-6 mb-3">B. Conversion Event or Landing Page Setup (Pixel)</h3>
+                <p class="text-gray-600 mb-3">Easier to configure than S2S, but is subject to cookie consent and provides less accuracy. If your site is a Single-Page Application (SPA), you must resolve `click_id` persistence. Select only one option below to avoid duplicate measurement.</p>
+
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">iFrame</h4>
+                <div class="bg-gray-50 p-4 rounded-md shadow-inner mb-4">
+                    <pre class="code-block" id="iframe-tag-block"><code data-template-key="iframe">Loading...</code></pre>
+                </div>
+
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">JavaScript snippet</h4>
+                <div class="bg-gray-50 p-4 rounded-md shadow-inner mb-4">
+                    <pre class="code-block" id="js-snippet-block"><code data-template-key="js-snippet">Loading...</code></pre>
+                </div>
+
+                <h3 class="text-xl font-bold text-gray-700 mt-6 mb-3">C. WebSDK Integration</h3>
+                <p class="text-gray-600 mb-3">Recommended for sites built as Single-Page Applications (SPAs) or when `click_id` is not persisted. It is also cookieless, slightly more complex than iFrame, and requires a small change in `utm_campaign` on URLs.</p>
+                
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">1. Base Tag WebSDK (Trigger: Initialization - All Pages)</h4>
+                <div class="bg-gray-50 p-4 rounded-md shadow-inner mb-4">
+                    <pre class="code-block" id="websdk-base-block"><code>&lt;script src="https://static-cdn.trackier.com/js/trackier-websdk-init.js"&gt;&lt;/script&gt;</code></pre>
+                </div>
+
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">2. Conversion Tag for WebSDK (Trigger: Conversion action, event, path, etc.)</h4>
+                <div class="bg-gray-50 p-4 rounded-md shadow-inner mb-4">
+                    <pre class="code-block" id="websdk-conversion-block"><code data-template-key="websdk-conv">Loading...</code></pre>
+                </div>
+            </div>
+            
+            <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4 border-b pb-2">Resolving `click_id` Persistence (For non-S2S/WebSDK SPAs)</h2>
+            <p class="text-gray-600 mb-3">If the `click_id` is not persisting until the conversion, the following steps can be taken to resolve this, particularly on SPA websites.</p>
+            <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">1. Variable to fetch `click_id` in the URL (Variable Type: URL)</h4>
+            <p class="text-gray-600 mb-3">Component: Consultation, Consultation Key: `click_id`.</p>
+            <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">2. HTML Tag to save `click_id` in `localStorage` (Trigger: All Pages)</h4>
+            <div class="bg-gray-50 p-4 rounded-md shadow-inner mb-4">
+                <pre class="code-block" id="save-click-id-block"><code data-template-key="save-click-id">&lt;script&gt;
+(function() {
+var clickId = $$CLICK_ID_VAR$$; // &lt;-- Replace this variable
+if (clickId) {
+localStorage.setItem('trackier_click_id', clickId);
+console.log('Trackier click_id salvo no Local Storage:', clickId);
+}
+})();
+&lt;/script&gt;</code></pre>
+                <p class="text-sm text-gray-500 mt-2">**IMPORTANT:** Replace **`$$CLICK_ID_VAR$$`** with the variable created in the previous step (e.g., `{{DLV - URL - click_id}}`).</p>
+            </div>
+            <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">3. Variable to retrieve `click_id` from `localStorage` (Variable Type: Custom JavaScript)</h4>
+            <div class="bg-gray-50 p-4 rounded-md shadow-inner mb-4">
+                <pre class="code-block" id="retrieve-click-id-block"><code>function() {
+return localStorage.getItem('trackier_click_id');
+}</code></pre>
+            </div>
+
+            <p class="text-gray-600 mt-8">Please inform the team which integration method was chosen so we can perform the tests appropriately. Should you have any questions, please do not hesitate to contact us at: <a href="mailto:usm_performance@usmediaconslting.com" class="text-blue-600 hover:text-blue-800">usm_performance@usmediaconslting.com</a>.</p>
+        </div>
+        
+        <div class="text-center p-6 md:p-8 text-xs text-gray-500 bg-gray-50 border-t rounded-b-xl">
+            <p>US Media Consulting, LLC. All rights reserved. <br> <a href="https://usmediaconsulting.com/en/" target="_blank" class="text-gray-500 hover:text-gray-700 transition-colors">Visit our website</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Variáveis globais para armazenar o estado
+        const codeTemplates = {}; 
+        let currentTokens = {};
+        
+        // 1. Definições de Macros de Conversão por Modelo
+        const CONVERSION_MACROS = {
+            'CPA': {
+                suffix: '&txn_id={TRANSACTION_ID}&sale_amount={VALUE}',
+                websdk: '{"txn_id":"{TRANSACTION_ID}","sale_amount":"{VALUE}","is_iframe":true}'
+            },
+            'CPL': {
+                suffix: '&txn_id={LEAD_ID}&sale_amount={LEAD_VALUE}',
+                websdk: '{"txn_id":"{LEAD_ID}","sale_amount":"{LEAD_VALUE}","is_iframe":true}'
+            },
+            'CPS': {
+                suffix: '&txn_id={ORDER_ID}&sale_amount={TOTAL_AMOUNT}',
+                websdk: '{"txn_id":"{ORDER_ID}","sale_amount":"{TOTAL_AMOUNT}","is_iframe":true}'
+            }
+        };
+
+        // 2. Templates de Código Base com Placeholders para Token e Macros
+        const BASE_TEMPLATES = {
+            's2s': 'https://us.trackier.co/acquisition?click_id={click_id}&security_token=$$SECURITY_TOKEN$$$$MACRO_SUFFIX$$',
+            
+            'iframe': `&lt;iframe src="https://trackier.usmediaconsulting.com/pixel?av=$$AV_TOKEN$$$$MACRO_SUFFIX$$" scrolling="no" frameborder="0" width="1" height="1"&gt;&lt;/iframe&gt;`,
+            
+            'js-snippet': `&lt;script type="text/javascript"&gt;(function(){var a=document.createElement("iframe");a.setAttribute("src","https://trackier.usmediaconsulting.com/pixel?av=$$AV_TOKEN$$$$MACRO_SUFFIX$$");a.style.width="1";a.style.height="1";document.body.appendChild(a)})();&lt;/script&gt;`,
+
+            'websdk-conv': `&lt;script src='https://static-cdn.trackier.com/js/trackier-web-sdk.js'&gt;&lt;/script&gt;
+&lt;script&gt;
+window.TrackierWebSDK.trackConv('trackier.usmediaconsulting.com', '$$AV_TOKEN$$', $$WEBSDK_MACRO_JSON$$);
+&lt;/script&gt;`,
+
+            'save-click-id': document.getElementById('save-click-id-block').querySelector('code').textContent
+        };
+
+
+        // 3. Função para Atualizar os Blocos de Código
+        function updateCodeBlocks(modelKey) {
+            const macros = CONVERSION_MACROS[modelKey];
+            
+            if (!currentTokens['Client Name']) return; 
+
+            document.querySelectorAll('[data-template-key]').forEach(codeElement => {
+                const key = codeElement.getAttribute('data-template-key');
+                let template = BASE_TEMPLATES[key];
+
+                if (!template) return;
+
+                // 3a. Substituição dos Tokens 
+                template = template.replace('$$SECURITY_TOKEN$$', currentTokens['Security Token'] || 'TOKEN_DO_NOT_FOUND');
+                template = template.replace('$$AV_TOKEN$$', currentTokens['AV Token'] || 'TOKEN_DO_NOT_FOUND');
+                template = template.replace('$$CLICK_ID_VAR$$', currentTokens['Click_id Var'] || '{{DLV - URL - click_id}}');
+                
+                // 3b. Substituição dos Macros de Conversão
+                if (key === 'websdk-conv') {
+                    template = template.replace('$$WEBSDK_MACRO_JSON$$', macros.websdk);
+                } else if (key !== 'save-click-id') {
+                    template = template.replace('$$MACRO_SUFFIX$$', macros.suffix);
+                }
+                
+                // 3c. Aplica o Código Atualizado
+                codeElement.textContent = template;
+            });
+        }
+
+
+        // 4. Função Principal de Carregamento de Dados (Apps Script)
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const SPREADSHEET_BASE_URL = 'https://script.google.com/macros/s/AKfycbxpwfCktill5VBVagTuPM8lD7hUhnAfQXoddMDXRbnqs8qkNOmb3dyFuNlmKGclpW0Y/exec'; 
+            const selector = document.getElementById('campaign-model-select');
+            
+            // --- CORREÇÃO DE LEITURA (MOVIDO PARA O TOPO E USANDO window.parent.location.hash) ---
+            // Leitura da Hash URL da janela principal (a do Google Sites)
+            const hashValue = window.parent.location.hash; // CHAVE PARA O GOOGLE SITES
+            let clientID = null; 
+            
+            // 2. Extrai o ID se a hash tiver o formato correto (#id=)
+            if (hashValue && hashValue.startsWith('#id=')) {
+                clientID = hashValue.substring(4); // Remove "#id="
+            }
+
+            // --- BLOCO DE DEBUG (MANTIDO) ---
+            console.log('Hash URL da Janela Principal (window.parent.location.hash):', hashValue);
+            console.log('ID do Cliente Extraído:', clientID);
+
+            // --- BLOCO DE VERIFICAÇÃO (CORRIGIDO E AGORA ESTÁ NO LUGAR CERTO) ---
+            if (!clientID) {
+                document.getElementById('client-name').textContent = "ERRO: Token de Integração Ausente";
+                document.getElementById('integration-methods').innerHTML = '<p class="text-red-600 font-semibold">O token de integração (**`#id=...`**) está ausente na URL. Por favor, utilize o link completo no formato **`.../início#id=SEU_TOKEN`**.</p>';
+                return;
+            }
+
+            // Adiciona o listener para atualizar ao mudar o modelo
+            selector.addEventListener('change', (e) => updateCodeBlocks(e.target.value));
+
+            async function loadIntegrationData() {
+                // Monta a URL completa do Apps Script com o ID do cliente
+                const FINAL_APPS_SCRIPT_URL = `${SPREADSHEET_BASE_URL}?client_id=${clientID}`;
+
+                try {
+                    const response = await fetch(FINAL_APPS_SCRIPT_URL, { 
+                        mode: 'cors', 
+                        cache: 'no-cache' 
+                    }); 
+                    
+                    if (!response.ok) {
+                        throw new Error(`Erro HTTP! Status: ${response.status}. Verifique se o Web App está ativo e o ID existe na planilha.`);
+                    }
+                    
+                    const config = await response.json(); 
+                    
+                    if (config.error) {
+                         throw new Error(config.error);
+                    }
+
+                    currentTokens = config; 
+                    
+                    document.getElementById('client-name').textContent = config['Client Name'] || 'Configuration Data';
+                    
+                    updateCodeBlocks(selector.value); 
+
+                } catch (error) {
+                    console.error("Erro ao carregar dados de integração. Detalhes:", error);
+                    document.getElementById('client-name').textContent = "Falha no Carregamento dos Dados";
+                    document.getElementById('integration-methods').innerHTML = `<p class="text-red-600 font-semibold">Falha ao carregar a documentação. Mensagem: ${error.message}. <br> URL de Busca: ${FINAL_APPS_SCRIPT_URL}</p>`;
+                }
+            }
+
+            loadIntegrationData();
+        });
+    </script>
+</body>
+</html>
